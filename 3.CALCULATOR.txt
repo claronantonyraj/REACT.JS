@@ -1,0 +1,129 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function Calculator() {
+  const [display, setDisplay] = useState('');
+  const [currentValue, setCurrentValue] = useState('');
+  const [operator, setOperator] = useState('');
+
+  const handleButtonClick = (value) => {
+    if (!isNaN(value) || value === '.') {
+      setCurrentValue(currentValue + value);
+      setDisplay(display + value);
+    } else if (value === 'C') {
+      setCurrentValue('');
+      setOperator('');
+      setDisplay('');
+    } else if (value === '=') {
+      let result;
+      switch (operator) {
+        case '+':
+          result = parseFloat(display) + parseFloat(currentValue);
+          break;
+        case '-':
+          result = parseFloat(display) - parseFloat(currentValue);
+          break;
+        case '*':
+          result = parseFloat(display) * parseFloat(currentValue);
+          break;
+        case '/':
+          result = parseFloat(display) / parseFloat(currentValue);
+          break;
+        default:
+          return;
+      }
+      setDisplay(result.toString());
+      setCurrentValue('');
+      setOperator('');
+    } else {
+      setDisplay(display + value);
+      setCurrentValue('');
+      setOperator(value);
+    }
+  };
+
+  return (
+    <div className="calculator">
+      <title>Calculator</title>
+      <div className="display">{display}</div>
+      <div className="buttons">
+        <button onClick={() => handleButtonClick('C')} className="clear">C</button>
+        <button onClick={() => handleButtonClick('/')} className="operator">/</button>
+        <button onClick={() => handleButtonClick('*')} className="operator">*</button>
+        <button onClick={() => handleButtonClick('7')}>7</button>
+        <button onClick={() => handleButtonClick('8')}>8</button>
+        <button onClick={() => handleButtonClick('9')}>9</button>
+        <button onClick={() => handleButtonClick('-')} className="operator">-</button>
+        <button onClick={() => handleButtonClick('4')}>4</button>
+        <button onClick={() => handleButtonClick('5')}>5</button>
+        <button onClick={() => handleButtonClick('6')}>6</button>
+        <button onClick={() => handleButtonClick('+')} className="operator">+</button>
+        <button onClick={() => handleButtonClick('1')}>1</button>
+        <button onClick={() => handleButtonClick('2')}>2</button>
+        <button onClick={() => handleButtonClick('3')}>3</button>
+        <button onClick={() => handleButtonClick('=')} className="equals">=</button>
+        <button onClick={() => handleButtonClick('0')} className="zero">0</button>
+        <button onClick={() => handleButtonClick('.')} className="dot">.</button>
+      </div>
+    </div>
+  );
+}
+
+export default Calculator;
+
+
+#APP.CSS
+
+body{
+  background-color: #ff9500;
+}
+
+.calculator {
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.display {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: right;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+.clear, .operator, .equals, .zero, .dot {
+  background-color: #ff9500;
+  color: #fff;
+}
+
+.clear:hover, .operator:hover, .equals:hover, .zero:hover, .dot:hover {
+  background-color: #ff7b00;
+}
+
+.equals {
+  grid-column: span 2;
+}

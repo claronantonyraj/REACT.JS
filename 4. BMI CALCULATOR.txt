@@ -1,0 +1,98 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function BMICalculator() {
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [bmi, setBMI] = useState(null);
+
+  const handleChangeHeight = (event) => {
+    setHeight(event.target.value);
+  };
+
+  const handleChangeWeight = (event) => {
+    setWeight(event.target.value);
+  };
+
+  const calculateBMI = () => {
+    if (height && weight) {
+      const heightMeters = height / 100;
+      const bmiValue = (weight / (heightMeters * heightMeters)).toFixed(2);
+      setBMI(bmiValue);
+    }
+  };
+
+  return (
+    <div className="bmi-calculator">
+      <h1>BMI Calculator</h1>
+      <div className="input-group">
+        <label>
+          Height (cm):
+          <input type="number" value={height} onChange={handleChangeHeight} />
+        </label>
+      </div>
+      <div className="input-group">
+        <label>
+          Weight (kg):
+          <input type="number" value={weight} onChange={handleChangeWeight} />
+        </label>
+      </div>
+      <button onClick={calculateBMI}>Calculate BMI</button>
+      {bmi && <p>Your BMI: {bmi}</p>}
+    </div>
+  );
+}
+
+export default BMICalculator;
+
+
+#app.css
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #dddd; /* Light gray background */
+}
+
+.bmi-calculator {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #9495bd; /* White background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff; /* Blue button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+p {
+  margin-top: 15px;
+  font-weight: bold;
+}

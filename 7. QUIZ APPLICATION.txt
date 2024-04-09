@@ -1,0 +1,140 @@
+import React, { useState } from 'react';
+import './App.css';
+
+const questionsData = [
+  {
+    question: 'Who is the best captain of ICC?',
+    options: ['DHONI', 'RICKY PONTING', 'AARON FINCH', 'GANGULY'],
+    correctAnswer: 'RICKY PONTING'
+  },
+  {
+    question: 'What is the largest planet in our solar system?',
+    options: ['Mars', 'Jupiter', 'Earth', 'Saturn'],
+    correctAnswer: 'Jupiter'
+  },
+  {
+    question: 'Who wrote "To Kill a Mockingbird"?',
+    options: ['Harper Lee', 'Stephen King', 'J.K. Rowling', 'Charles Dickens'],
+    correctAnswer: 'Harper Lee'
+  }
+];
+
+function Quiz() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showScore, setShowScore] = useState(false);
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
+
+  const handleNextQuestion = () => {
+    if (selectedOption === questionsData[currentQuestionIndex].correctAnswer) {
+      setScore(score + 1);
+    }
+    setSelectedOption(null);
+    if (currentQuestionIndex + 1 < questionsData.length) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setShowScore(true);
+    }
+  };
+
+  return (
+    <div className="quiz">
+      {!showScore ? (
+        <>
+          <div className="question">{questionsData[currentQuestionIndex].question}</div>
+          <div className="options">
+            {questionsData[currentQuestionIndex].options.map((option, index) => (
+              <button
+                key={index}
+                className={`option ${selectedOption === option ? 'selected' : ''}`}
+                onClick={() => handleOptionSelect(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          <button className="next" onClick={handleNextQuestion}>Next</button>
+        </>
+      ) : (
+        <div className="score-card">
+          <h2>Quiz Completed!</h2>
+          <p>Your Score: {score}/{questionsData.length}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+#app.css
+
+
+.quiz {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.option {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.next {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.next:hover {
+  background-color: #0056b3;
+}
+
+.score-card {
+  text-align: center;
+}
+
+.score-card h2 {
+  margin-bottom: 10px;
+}
+
+.score-card p {
+  font-size: 18px;
+}
